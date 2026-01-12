@@ -1,15 +1,12 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = "postgresql://dhruv@localhost:5432/godaily_db"
+DATABASE_URL = "postgresql://dhruv@localhost/godaily_db"
 
 engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
+Base = declarative_base()
 
 def get_db():
     db = SessionLocal()
@@ -17,7 +14,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
-from models import Base
-
-Base.metadata.create_all(bind=engine)

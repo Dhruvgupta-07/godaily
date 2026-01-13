@@ -1,13 +1,17 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
 class UserCreate(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
 
-class Token(BaseModel):
-    access_token: str
-    token_type: str
+class RoutineCreate(BaseModel):
+    title: str
+
+
+class RoutineResponse(BaseModel):
+    id: int
+    title: str
+
+    class Config:
+        from_attributes = True

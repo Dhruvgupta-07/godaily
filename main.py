@@ -1,55 +1,75 @@
-from fastapi import FastAPI, Depends, HTTPException
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from jose import jwt, JWTError
+from passlib.context import CryptContext
+from jose import jwt
 
-from database import get_db
-from models import User
-from schemas import UserCreate, UserLogin
-from auth import hash_password, verify_password, create_access_token
+from database import Base, engine, get_db
+import models, schemas
 
-app = FastAPI()
-
-security = HTTPBearer()
 SECRET_KEY = "secret123"
 ALGORITHM = "HS256"
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
-@app.post("/register")
-def register(user: UserCreate, db: Session = Depends(get_db)):
-    if db.query(User).filter(User.email == user.email).first():
-        raise HTTPException(status_code=400, detail="Email already registered")
+app = FastAPI()
 
-    new_user = User(
-        email=user.email,
-        hashed_password=hash_password(user.password)
-    )
-    db.add(new_user)
-    db.commit()
-    return {"message": "User registered successfully"}
+Base.metadata.create_all(bind=engine)
 
+def hash_password(password: str):
+    return pwd_context.hash(password)
 
-@app.post("/login")
-def login(user: UserLogin, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.email == user.email).first()
-    if not db_user or not verify_password(user.password, db_user.hashed_password):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+def verify_password(password, hashed):
+    return pwd_context.verify(password, hashed)
 
-    token = create_access_token({"sub": db_user.email})
-    return {"access_token": token}
+def create_token(user_id: int):
+    return jwt.encode({"sub": str(user_id)}, SECRET_KEY, algorithm=ALGORITHM)
 
-
-@app.get("/me")
-def me(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+def get_current_user(
+    token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
-    token = credentials.credentials
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        email = payload.get("sub")
-    except JWTError:
+        user_id = int(payload.get("sub"))
+    except:
         raise HTTPException(status_code=401, detail="Invalid token")
 
-    user = db.query(User).filter(User.email == email).first()
-    return {"id": user.id, "email": user.email}
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+@app.post("/register")
+def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    hashed = hash_password(user.password)
+    new_user = models.User(email=user.email, hashed_password=hashed)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return {"message": "User created"}
+
+@app.post("/login")
+def login(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db)
+):
+    user = db.query(models.User).filter(models.User.email == form_data.username).first()
+    if not user or not verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    token = create_token(user.id)
+    return {"access_token": token, "token_type": "bearer"}
+
+@app.post("/routines", response_model=schemas.RoutineResponse)
+def create_routine(
+    routine: schemas.RoutineCreate,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(get_current_user)
+):
+    new_routine = models.Routine(title=routine.title, owner_id=user.id)
+    db.add(new_routine)
+    db.commit()
+    db.refresh(new_routine)
+    return new_routine

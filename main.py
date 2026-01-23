@@ -1,45 +1,27 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-<<<<<<< Updated upstream
 from database import get_db
 from models import User
 from schemas import UserCreate, UserLogin
 from auth import hash_password, verify_password
-=======
-from pydantic import BaseModel
-import os
-
-from database import Base, engine, get_db
-from models import User, Task
-import schemas
-
-# ================= CONFIG =================
-SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
-ALGORITHM = os.getenv("ALGORITHM", "HS256")
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
->>>>>>> Stashed changes
 
 app = FastAPI()
 
+# ---------------- ROOT ----------------
 @app.get("/")
 def root():
     return {"status": "GoDaily backend running 🚀"}
 
-
+# ---------------- REGISTER ----------------
 @app.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
-    # Check if user already exists
     existing_user = db.query(User).filter(User.email == user.email).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered")
 
-    # Hash password
     hashed_password = hash_password(user.password)
 
-    # Create user
     new_user = User(
         email=user.email,
         password=hashed_password
@@ -51,7 +33,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
     return {"message": "User registered successfully"}
 
-
+# ---------------- LOGIN ----------------
 @app.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()

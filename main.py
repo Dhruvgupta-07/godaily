@@ -8,12 +8,10 @@ from auth import hash_password, verify_password
 
 app = FastAPI()
 
-# ---------------- ROOT ----------------
 @app.get("/")
 def root():
     return {"status": "GoDaily backend running 🚀"}
 
-# ---------------- REGISTER ----------------
 @app.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
     existing_user = db.query(User).filter(User.email == user.email).first()
@@ -33,7 +31,6 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
     return {"message": "User registered successfully"}
 
-# ---------------- LOGIN ----------------
 @app.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()

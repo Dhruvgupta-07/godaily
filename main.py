@@ -1,10 +1,26 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+<<<<<<< Updated upstream
 from database import get_db
 from models import User
 from schemas import UserCreate, UserLogin
 from auth import hash_password, verify_password
+=======
+from pydantic import BaseModel
+import os
+
+from database import Base, engine, get_db
+from models import User, Task
+import schemas
+
+# ================= CONFIG =================
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
+>>>>>>> Stashed changes
 
 app = FastAPI()
 

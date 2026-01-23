@@ -24,6 +24,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 app = FastAPI()
 
+@app.get("/")
+def root():
+    return {"status": "GoDaily backend running 🚀"}
+
 
 @app.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):

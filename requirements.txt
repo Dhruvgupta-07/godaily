@@ -4,4 +4,3 @@ sqlalchemy
 pydantic
 passlib[bcrypt]
 python-multipart
-psycopg2-binary

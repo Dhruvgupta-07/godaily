@@ -1,44 +1,37 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-# Import database first
-from database import engine, Base, get_db
+from database import get_db, Base, engine
+import models
+from models import Task
+from schemas import TaskCreate
 
-# Import models BEFORE creating tables
-from models import User
-from schemas import UserCreate, UserLogin
-from auth import hash_password, verify_password
-
-# Create FastAPI app
 app = FastAPI()
 
-# Create all tables - this MUST come after importing models
+# 🔥 THIS CREATES TABLES
 Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def root():
     return {"status": "GoDaily backend running 🚀"}
 
-@app.post("/register")
-def register(user: UserCreate, db: Session = Depends(get_db)):
-    existing_user = db.query(User).filter(User.email == user.email).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-
-    hashed_password = hash_password(user.password)
-    new_user = User(email=user.email, password=hashed_password)
-
-    db.add(new_user)
+@app.post("/tasks")
+def add_task(task: TaskCreate, db: Session = Depends(get_db)):
+    new_task = Task(title=task.title)
+    db.add(new_task)
     db.commit()
-    db.refresh(new_user)
+    db.refresh(new_task)
+    return new_task
 
-    return {"message": "User registered successfully"}
+@app.get("/tasks")
+def get_tasks(db: Session = Depends(get_db)):
+    return db.query(Task).all()
 
-@app.post("/login")
-def login(user: UserLogin, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.email == user.email).first()
-
-    if not db_user or not verify_password(user.password, db_user.password):
-        raise HTTPException(status_code=400, detail="Invalid credentials")
-
-    return {"message": "Login successful"}
+@app.delete("/tasks/{task_id}")
+def delete_task(task_id: int, db: Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task_id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    db.delete(task)
+    db.commit()
+    return {"message": "Task deleted"}

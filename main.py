@@ -1,12 +1,19 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from database import get_db
+# Import database first
+from database import engine, Base, get_db
+
+# Import models BEFORE creating tables
 from models import User
 from schemas import UserCreate, UserLogin
 from auth import hash_password, verify_password
 
+# Create FastAPI app
 app = FastAPI()
+
+# Create all tables - this MUST come after importing models
+Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def root():

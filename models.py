@@ -1,14 +1,15 @@
 from sqlalchemy import Column, Integer, String, Date, Time, ForeignKey
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import relationship
 
-Base = declarative_base()
+# Import Base from database.py instead of creating a new one
+from database import Base
 
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
-    password_hash = Column(String, nullable=False)
+    password = Column(String, nullable=False)  # Changed from password_hash to match your code
 
 class Routine(Base):
     __tablename__ = "routines"

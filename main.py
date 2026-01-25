@@ -1,5 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
+import os
+import uvicorn
 
 from database import get_db
 from models import User
@@ -42,3 +44,8 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     return {"message": "Login successful"}
+
+# ✅ REQUIRED FOR RAILWAY (DO NOT REMOVE)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)

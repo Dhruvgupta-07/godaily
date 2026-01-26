@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GoDaily - Dashboard</title>
-  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="app-container">
@@ -39,7 +39,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v-2zM9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
               </svg>
               <span>Tasks</span>
-              <span class="nav-badge" id="task-badge">12</span>
             </a>
           </li>
           <li class="nav-item">
@@ -173,23 +172,6 @@
               Increased from last month
             </div>
           </div>
-          <div class="summary-card" data-filter="in-progress" onclick="filterProjects('in-progress')">
-            <div class="summary-card-header">
-              <span class="summary-card-label">Running Projects</span>
-              <div class="summary-card-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17l9.2-9.2M17 17V7m0 10H7" />
-                </svg>
-              </div>
-            </div>
-            <p class="summary-card-value" id="running-tasks">12</p>
-            <div class="summary-card-trend">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
-              Increased from last month
-            </div>
-          </div>
           <div class="summary-card" data-filter="pending" onclick="filterProjects('pending')">
             <div class="summary-card-header">
               <span class="summary-card-label">Pending Project</span>
@@ -208,43 +190,6 @@
 
         <!-- Dashboard Grid -->
         <div class="dashboard-grid">
-          <!-- Project Analytics -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Project Analytics</h3>
-            </div>
-            <div class="analytics-chart">
-              <div class="chart-bar-item">
-                <div class="chart-bar level-2"></div>
-                <span class="chart-bar-label">S</span>
-              </div>
-              <div class="chart-bar-item">
-                <div class="chart-bar level-3"></div>
-                <span class="chart-bar-label">M</span>
-              </div>
-              <div class="chart-bar-item">
-                <div class="chart-bar level-4"></div>
-                <span class="chart-bar-label">T</span>
-              </div>
-              <div class="chart-bar-item">
-                <div class="chart-bar level-3"></div>
-                <span class="chart-bar-label">W</span>
-              </div>
-              <div class="chart-bar-item">
-                <div class="chart-bar level-5"></div>
-                <span class="chart-bar-label">T</span>
-              </div>
-              <div class="chart-bar-item">
-                <div class="chart-bar level-4"></div>
-                <span class="chart-bar-label">F</span>
-              </div>
-              <div class="chart-bar-item">
-                <div class="chart-bar level-1"></div>
-                <span class="chart-bar-label">S</span>
-              </div>
-            </div>
-          </div>
-
           <!-- Reminders & Projects -->
           <div class="card">
             <div class="card-header">
@@ -388,7 +333,7 @@
     </main>
   </div>
 
-  <script src="/static/js/app.js"></script>
+  <script src="js/app.js"></script>
   <script>
     // Initialize dashboard on load
     document.addEventListener('DOMContentLoaded', function() {

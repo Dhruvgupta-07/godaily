@@ -1024,11 +1024,371 @@ body {
   background-color: var(--gray-300);
 }
 
+.task-btn.delete {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.task-btn.delete:hover {
+  background-color: #fecaca;
+}
+
 .no-tasks {
   text-align: center;
   padding: 40px;
   color: var(--text-muted);
   font-size: 0.9375rem;
+}
+
+/* Calendar & Habit Styles */
+
+.calendar-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -13px;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.calendar-view {
+  display: none;
+}
+
+.calendar-view.active {
+  display: block;
+}
+
+/* Time Blocking */
+.time-blocking-container {
+  display: flex;
+  gap: 16px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.time-slots {
+  display: flex;
+  flex-direction: column;
+  min-width: 80px;
+  border-right: 1px solid var(--border-color);
+  padding-right: 12px;
+}
+
+.time-slot-header {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.time-slot {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 48px;
+  text-align: right;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  flex: 1;
+}
+
+.day-column {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.day-header {
+  background: var(--primary);
+  color: white;
+  padding: 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.day-blocks {
+  height: 300px;
+  background: var(--bg-tertiary);
+}
+
+/* Smart Reminders */
+.reminders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reminder-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-xs);
+  transition: background-color 0.2s ease;
+}
+
+.reminder-item:hover {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.reminder-time {
+  min-width: 70px;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.875rem;
+}
+
+.reminder-content {
+  flex: 1;
+}
+
+.reminder-title {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.reminder-description {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.reminder-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.reminder-badge.daily {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.reminder-badge.custom {
+  background: #f3e8ff;
+  color: #7e22ce;
+}
+
+/* Month Calendar */
+.month-calendar {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+}
+
+.month-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.month-header h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.month-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.month-day-header {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 12px;
+  font-size: 0.875rem;
+}
+
+.month-date-cell {
+  aspect-ratio: 1;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xs);
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.month-date-cell:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.month-date-cell.today {
+  background: var(--primary);
+  color: white;
+}
+
+.month-date-cell.today .date-number {
+  color: white;
+  font-weight: 700;
+}
+
+.month-date-cell.empty {
+  background: var(--bg-tertiary);
+  cursor: default;
+}
+
+.date-number {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.date-task-count {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  background: var(--status-danger);
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Daily Habits */
+.habits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.habit-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-xs);
+  transition: all 0.2s ease;
+}
+
+.habit-item:hover {
+  background: var(--bg-secondary);
+}
+
+.habit-checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.habit-checkbox:hover {
+  border-color: var(--primary);
+}
+
+.habit-checkbox.checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.habit-checkbox.checked::after {
+  content: "✓";
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.habit-info {
+  flex: 1;
+}
+
+.habit-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.habit-frequency {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.habit-streak-indicator {
+  padding: 4px 12px;
+  background: var(--status-completed);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.habit-streak {
+  font-size: 0.875rem;
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+/* Habit Statistics */
+.habit-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 16px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-xs);
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
 }
 
 /* Add Task Form */

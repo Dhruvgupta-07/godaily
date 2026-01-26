@@ -264,6 +264,16 @@ function createTaskElement(task, showActions = true) {
     const actions = document.createElement("div")
     actions.className = "task-actions"
 
+    const deleteBtn = document.createElement("button")
+    deleteBtn.className = "task-btn delete"
+    deleteBtn.textContent = "Delete"
+    deleteBtn.onclick = () => {
+      if (confirm(`Delete "${task.title}"?`)) {
+        deleteTask(task.id)
+        refreshCurrentPage()
+      }
+    }
+
     if (task.completed) {
       const undoBtn = document.createElement("button")
       undoBtn.className = "task-btn undo"
@@ -284,6 +294,7 @@ function createTaskElement(task, showActions = true) {
       actions.appendChild(doneBtn)
     }
 
+    actions.appendChild(deleteBtn)
     div.appendChild(actions)
   }
 
@@ -313,13 +324,10 @@ function renderDashboard() {
   const totalEl = document.getElementById("total-tasks")
   const completedEl = document.getElementById("completed-tasks")
   const pendingEl = document.getElementById("pending-tasks")
-  const runningEl = document.getElementById("running-tasks")
 
   if (totalEl) totalEl.textContent = stats.total || 24
   if (completedEl) completedEl.textContent = stats.completed || 10
   if (pendingEl) pendingEl.textContent = stats.pending || 2
-  if (runningEl)
-    runningEl.textContent = Math.max(0, (stats.total || 24) - (stats.completed || 10) - (stats.pending || 2)) || 12
 
   // Update progress gauge
   const progressPercent = document.getElementById("progress-percent")
@@ -377,6 +385,101 @@ function renderCalendar() {
       })
     }
   })
+}
+
+// Calendar view switcher
+function switchCalendarView(view) {
+  // Hide all views
+  document.querySelectorAll('.calendar-view').forEach(v => v.classList.remove('active'))
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'))
+
+  // Show selected view
+  const viewElement = document.getElementById(view + '-view')
+  if (viewElement) {
+    viewElement.classList.add('active')
+  }
+
+  // Mark button as active
+  event.target.classList.add('active')
+
+  // Render month view if needed
+  if (view === 'month') {
+    generateMonthCalendar()
+  }
+}
+
+function generateMonthCalendar() {
+  const container = document.getElementById('month-calendar')
+  if (!container) return
+
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = today.getMonth()
+
+  // Create header
+  const header = document.createElement('div')
+  header.className = 'month-header'
+  header.innerHTML = `<h3>${today.toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>`
+
+  // Create day headers
+  const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const daysDiv = document.createElement('div')
+  daysDiv.className = 'month-days'
+
+  dayHeaders.forEach(day => {
+    const dayEl = document.createElement('div')
+    dayEl.className = 'month-day-header'
+    dayEl.textContent = day
+    daysDiv.appendChild(dayEl)
+  })
+
+  // Create date cells
+  const firstDay = new Date(year, month, 1).getDay()
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+
+  // Add empty cells for days before month starts
+  for (let i = 0; i < firstDay; i++) {
+    const emptyCell = document.createElement('div')
+    emptyCell.className = 'month-date-cell empty'
+    daysDiv.appendChild(emptyCell)
+  }
+
+  // Add date cells
+  for (let date = 1; date <= daysInMonth; date++) {
+    const dateCell = document.createElement('div')
+    dateCell.className = 'month-date-cell'
+    if (date === today.getDate()) {
+      dateCell.classList.add('today')
+    }
+
+    const taskCount = tasks.filter(t => {
+      const taskDate = new Date(t.dueDate)
+      return taskDate.getDate() === date && taskDate.getMonth() === month
+    }).length
+
+    dateCell.innerHTML = `
+      <div class="date-number">${date}</div>
+      ${taskCount > 0 ? `<div class="date-task-count">${taskCount}</div>` : ''}
+    `
+    daysDiv.appendChild(dateCell)
+  }
+
+  container.innerHTML = ''
+  container.appendChild(header)
+  container.appendChild(daysDiv)
+}
+
+// Habit tracking functions
+function toggleHabit(element) {
+  element.classList.toggle('checked')
+}
+
+function openAddHabitModal() {
+  alert('Add Habit feature - Coming soon!')
+}
+
+function openReminderModal() {
+  alert('Add Reminder feature - Coming soon!')
 }
 
 function renderAnalytics() {

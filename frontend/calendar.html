@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GoDaily - Calendar</title>
-  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="app-container">
@@ -90,52 +90,188 @@
 
       <!-- Page Content -->
       <div class="page-content">
-        <h1 class="page-title">Calendar</h1>
-
-        <!-- Calendar Grid -->
-        <div class="calendar-grid" id="calendar-grid">
-          <div class="calendar-day">
-            <div class="calendar-day-header">Mon</div>
-            <div class="calendar-tasks" data-day="mon"></div>
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1>Calendar & Habits</h1>
+            <p>Plan your week, build daily habits, and stay on track with smart scheduling.</p>
           </div>
-          <div class="calendar-day">
-            <div class="calendar-day-header">Tue</div>
-            <div class="calendar-tasks" data-day="tue"></div>
-          </div>
-          <div class="calendar-day">
-            <div class="calendar-day-header">Wed</div>
-            <div class="calendar-tasks" data-day="wed"></div>
-          </div>
-          <div class="calendar-day">
-            <div class="calendar-day-header">Thu</div>
-            <div class="calendar-tasks" data-day="thu"></div>
-          </div>
-          <div class="calendar-day">
-            <div class="calendar-day-header">Fri</div>
-            <div class="calendar-tasks" data-day="fri"></div>
-          </div>
-          <div class="calendar-day">
-            <div class="calendar-day-header">Sat</div>
-            <div class="calendar-tasks" data-day="sat"></div>
-          </div>
-          <div class="calendar-day">
-            <div class="calendar-day-header">Sun</div>
-            <div class="calendar-tasks" data-day="sun"></div>
+          <div class="page-header-actions">
+            <button class="btn btn-primary" onclick="openAddHabitModal()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              Add Habit
+            </button>
           </div>
         </div>
 
-        <!-- Placeholder -->
-        <div class="card" style="margin-top: 24px; text-align: center;">
-          <p class="calendar-placeholder">Calendar integration coming soon</p>
-          <p style="color: var(--gray-400); font-size: 0.875rem; margin-top: 8px;">
-            Tasks will be automatically scheduled based on your preferences
-          </p>
+        <!-- Month View Tabs -->
+        <div class="calendar-tabs">
+          <button class="tab-btn active" onclick="switchCalendarView('week')">Week View</button>
+          <button class="tab-btn" onclick="switchCalendarView('month')">Month View</button>
+          <button class="tab-btn" onclick="switchCalendarView('habits')">Daily Habits</button>
+        </div>
+
+        <!-- Week View -->
+        <div id="week-view" class="calendar-view active">
+          <!-- Time Blocking Grid -->
+          <div class="time-blocking-container">
+            <div class="time-slots">
+              <div class="time-slot-header">Time</div>
+              <div class="time-slot">06:00</div>
+              <div class="time-slot">09:00</div>
+              <div class="time-slot">12:00</div>
+              <div class="time-slot">15:00</div>
+              <div class="time-slot">18:00</div>
+              <div class="time-slot">21:00</div>
+            </div>
+            <div class="days-grid">
+              <div class="day-column">
+                <div class="day-header">Mon</div>
+                <div class="day-blocks"></div>
+              </div>
+              <div class="day-column">
+                <div class="day-header">Tue</div>
+                <div class="day-blocks"></div>
+              </div>
+              <div class="day-column">
+                <div class="day-header">Wed</div>
+                <div class="day-blocks"></div>
+              </div>
+              <div class="day-column">
+                <div class="day-header">Thu</div>
+                <div class="day-blocks"></div>
+              </div>
+              <div class="day-column">
+                <div class="day-header">Fri</div>
+                <div class="day-blocks"></div>
+              </div>
+              <div class="day-column">
+                <div class="day-header">Sat</div>
+                <div class="day-blocks"></div>
+              </div>
+              <div class="day-column">
+                <div class="day-header">Sun</div>
+                <div class="day-blocks"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Smart Reminders -->
+          <div class="card" style="margin-top: 24px;">
+            <div class="card-header">
+              <h3 class="card-title">Smart Reminders</h3>
+              <button class="card-action" onclick="openReminderModal()">+ New</button>
+            </div>
+            <div class="reminders-list" id="reminders-list">
+              <div class="reminder-item">
+                <div class="reminder-time">09:00 AM</div>
+                <div class="reminder-content">
+                  <p class="reminder-title">Morning Standup</p>
+                  <p class="reminder-description">Team sync-up meeting</p>
+                </div>
+                <span class="reminder-badge daily">Daily</span>
+              </div>
+              <div class="reminder-item">
+                <div class="reminder-time">12:30 PM</div>
+                <div class="reminder-content">
+                  <p class="reminder-title">Lunch Break</p>
+                  <p class="reminder-description">Time to recharge</p>
+                </div>
+                <span class="reminder-badge daily">Daily</span>
+              </div>
+              <div class="reminder-item">
+                <div class="reminder-time">03:00 PM</div>
+                <div class="reminder-content">
+                  <p class="reminder-title">Deep Work Session</p>
+                  <p class="reminder-description">Focus time for priority tasks</p>
+                </div>
+                <span class="reminder-badge custom">Custom</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Month View -->
+        <div id="month-view" class="calendar-view">
+          <div class="month-calendar" id="month-calendar">
+            <!-- Month grid will be generated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Daily Habits Tracker -->
+        <div id="habits-view" class="calendar-view">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Today's Habits</h3>
+              <span class="habit-streak" id="habit-streak">7 day streak 🔥</span>
+            </div>
+            <div class="habits-list" id="habits-list">
+              <div class="habit-item">
+                <div class="habit-checkbox" onclick="toggleHabit(this)"></div>
+                <div class="habit-info">
+                  <p class="habit-name">Morning Exercise</p>
+                  <p class="habit-frequency">Every day at 6:00 AM</p>
+                </div>
+                <span class="habit-streak-indicator">3 days</span>
+              </div>
+              <div class="habit-item">
+                <div class="habit-checkbox" onclick="toggleHabit(this)"></div>
+                <div class="habit-info">
+                  <p class="habit-name">Read for 30 mins</p>
+                  <p class="habit-frequency">Every day</p>
+                </div>
+                <span class="habit-streak-indicator">5 days</span>
+              </div>
+              <div class="habit-item">
+                <div class="habit-checkbox" onclick="toggleHabit(this)"></div>
+                <div class="habit-info">
+                  <p class="habit-name">Meditation</p>
+                  <p class="habit-frequency">Every day at 8:00 PM</p>
+                </div>
+                <span class="habit-streak-indicator">2 days</span>
+              </div>
+              <div class="habit-item">
+                <div class="habit-checkbox" onclick="toggleHabit(this)"></div>
+                <div class="habit-info">
+                  <p class="habit-name">Review Daily Goals</p>
+                  <p class="habit-frequency">Every evening</p>
+                </div>
+                <span class="habit-streak-indicator">7 days</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Habit Statistics -->
+          <div class="card" style="margin-top: 24px;">
+            <div class="card-header">
+              <h3 class="card-title">Habit Performance</h3>
+            </div>
+            <div class="habit-stats">
+              <div class="stat-item">
+                <p class="stat-value">85%</p>
+                <p class="stat-label">Completion Rate</p>
+              </div>
+              <div class="stat-item">
+                <p class="stat-value">28</p>
+                <p class="stat-label">Total Habits Started</p>
+              </div>
+              <div class="stat-item">
+                <p class="stat-value">7</p>
+                <p class="stat-label">Active Habits</p>
+              </div>
+              <div class="stat-item">
+                <p class="stat-value">14</p>
+                <p class="stat-label">Days Streak Average</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
   </div>
 
-  <script src="/static/js/app.js"></script>
+  <script src="js/app.js"></script>
   <script>
     // Initialize calendar page
     document.addEventListener('DOMContentLoaded', function() {

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoDaily - Dashboard</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Logo is now clickable link to dashboard -->
+      <div class="sidebar-logo">
+        <a href="index.html">
+          <div class="logo-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h1>GoDaily</h1>
+        </a>
+      </div>
+      
+      <div class="sidebar-section-title">Menu</div>
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link active">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tasks.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v-2zM9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              <span>Tasks</span>
+              <span class="nav-badge" id="task-badge">12</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="calendar.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>Calendar</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="analytics.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              <span>Analytics</span>
+            </a>
+          </li>
+          <!-- Removed Team link -->
+        </ul>
+      </nav>
+      
+      <div class="sidebar-section-title">General</div>
+      <div class="sidebar-bottom">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="settings.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span>Settings</span>
+            </a>
+          </li>
+          <!-- Removed Help link -->
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="logout()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Removed Mobile App CTA -->
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="search-bar">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" id="global-search" placeholder="Search task">
+          <span class="search-shortcut">⌘ F</span>
+        </div>
+        <div class="topbar-right">
+          <!-- Replaced notification icons with Last Synced timestamp -->
+          <div class="last-synced">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Last synced:</span>
+            <span class="sync-time" id="last-sync-time">Just now</span>
+          </div>
+          <div class="user-info">
+            <div class="user-details">
+              <span class="user-name">Dhruv Gupta</span>
+              <span class="user-email">dhruv@godaily.com</span>
+            </div>
+            <div class="user-avatar">DG</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1>Dashboard</h1>
+            <p>Plan, prioritize, and accomplish your tasks with ease.</p>
+          </div>
+          <div class="page-header-actions">
+            <button class="btn btn-primary" onclick="window.location.href='tasks.html'">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              Add Project
+            </button>
+            <button class="btn btn-secondary">Import Data</button>
+          </div>
+        </div>
+
+        <!-- Interactive Summary Cards -->
+        <div class="summary-cards">
+          <div class="summary-card primary" data-filter="all" onclick="filterProjects('all')">
+            <div class="summary-card-header">
+              <span class="summary-card-label">Total Projects</span>
+              <div class="summary-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17l9.2-9.2M17 17V7m0 10H7" />
+                </svg>
+              </div>
+            </div>
+            <p class="summary-card-value" id="total-tasks">24</p>
+            <div class="summary-card-trend">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              Increased from last month
+            </div>
+          </div>
+          <div class="summary-card" data-filter="completed" onclick="filterProjects('completed')">
+            <div class="summary-card-header">
+              <span class="summary-card-label">Ended Projects</span>
+              <div class="summary-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17l9.2-9.2M17 17V7m0 10H7" />
+                </svg>
+              </div>
+            </div>
+            <p class="summary-card-value" id="completed-tasks">10</p>
+            <div class="summary-card-trend">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              Increased from last month
+            </div>
+          </div>
+          <div class="summary-card" data-filter="in-progress" onclick="filterProjects('in-progress')">
+            <div class="summary-card-header">
+              <span class="summary-card-label">Running Projects</span>
+              <div class="summary-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17l9.2-9.2M17 17V7m0 10H7" />
+                </svg>
+              </div>
+            </div>
+            <p class="summary-card-value" id="running-tasks">12</p>
+            <div class="summary-card-trend">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              Increased from last month
+            </div>
+          </div>
+          <div class="summary-card" data-filter="pending" onclick="filterProjects('pending')">
+            <div class="summary-card-header">
+              <span class="summary-card-label">Pending Project</span>
+              <div class="summary-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17l9.2-9.2M17 17V7m0 10H7" />
+                </svg>
+              </div>
+            </div>
+            <p class="summary-card-value" id="pending-tasks">2</p>
+            <div class="summary-card-trend negative">
+              On Discuss
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+          <!-- Project Analytics -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Project Analytics</h3>
+            </div>
+            <div class="analytics-chart">
+              <div class="chart-bar-item">
+                <div class="chart-bar level-2"></div>
+                <span class="chart-bar-label">S</span>
+              </div>
+              <div class="chart-bar-item">
+                <div class="chart-bar level-3"></div>
+                <span class="chart-bar-label">M</span>
+              </div>
+              <div class="chart-bar-item">
+                <div class="chart-bar level-4"></div>
+                <span class="chart-bar-label">T</span>
+              </div>
+              <div class="chart-bar-item">
+                <div class="chart-bar level-3"></div>
+                <span class="chart-bar-label">W</span>
+              </div>
+              <div class="chart-bar-item">
+                <div class="chart-bar level-5"></div>
+                <span class="chart-bar-label">T</span>
+              </div>
+              <div class="chart-bar-item">
+                <div class="chart-bar level-4"></div>
+                <span class="chart-bar-label">F</span>
+              </div>
+              <div class="chart-bar-item">
+                <div class="chart-bar level-1"></div>
+                <span class="chart-bar-label">S</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reminders & Projects -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Reminders</h3>
+              <button class="card-action">+ New</button>
+            </div>
+            <div class="reminder-card">
+              <h4 class="reminder-title">Meeting with Arc Company</h4>
+              <p class="reminder-subtitle">Project Discussion</p>
+              <div class="reminder-time">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Time : 02:00 pm - 04:00 pm
+              </div>
+              <button class="btn-meeting">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Start Meeting
+              </button>
+            </div>
+            
+            <div class="card-header" style="margin-top: 8px;">
+              <h3 class="card-title">Project</h3>
+              <button class="card-action">+ New</button>
+            </div>
+            <div class="project-list" id="project-list">
+              <div class="project-item" data-status="in-progress">
+                <div class="project-icon green">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <div class="project-info">
+                  <p class="project-name">Develop API Endpoints</p>
+                  <p class="project-due">Due date: Nov 26, 2024</p>
+                </div>
+                <span class="project-status in-progress">In Progress</span>
+              </div>
+              <div class="project-item" data-status="in-progress">
+                <div class="project-icon blue">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </div>
+                <div class="project-info">
+                  <p class="project-name">Onboarding Flow</p>
+                  <p class="project-due">Due date: Nov 26, 2024</p>
+                </div>
+                <span class="project-status in-progress">In Progress</span>
+              </div>
+              <div class="project-item" data-status="pending">
+                <div class="project-icon orange">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div class="project-info">
+                  <p class="project-name">Build Dashboard</p>
+                  <p class="project-due">Due date: Nov 30, 2024</p>
+                </div>
+                <span class="project-status pending">Pending</span>
+              </div>
+              <div class="project-item" data-status="completed">
+                <div class="project-icon purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="project-info">
+                  <p class="project-name">Optimize Page Load</p>
+                  <p class="project-due">Due date: Dec 5, 2024</p>
+                </div>
+                <span class="project-status completed">Completed</span>
+              </div>
+              <div class="project-item" data-status="completed">
+                <div class="project-icon red">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="project-info">
+                  <p class="project-name">Cross-Browser Testing</p>
+                  <p class="project-due">Due date: Dec 6, 2024</p>
+                </div>
+                <span class="project-status completed">Completed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Smart Scheduling, Progress -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Smart Scheduling Card -->
+            <div class="smart-scheduling">
+              <div class="smart-scheduling-header">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+                <h4>Smart Suggestion</h4>
+              </div>
+              <div class="smart-scheduling-task" id="suggested-task">
+                <p class="task-name">Develop API Endpoints</p>
+                <p class="task-reason">Due soonest with high priority</p>
+              </div>
+              <button class="smart-scheduling-btn" onclick="startSuggestedTask()">Start This Task</button>
+            </div>
+
+            <!-- Project Progress -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Project Progress</h3>
+              </div>
+              <div class="progress-gauge-container">
+                <div class="progress-gauge">
+                  <svg viewBox="0 0 180 180">
+                    <path class="gauge-bg" d="M30,90 A60,60 0 1,1 150,90" />
+                    <path class="gauge-progress" id="progress-gauge" d="M30,90 A60,60 0 1,1 150,90" stroke-dasharray="220" stroke-dashoffset="130" />
+                  </svg>
+                  <span class="progress-gauge-value" id="progress-percent">41%</span>
+                </div>
+                <div class="progress-legend">
+                  <div class="legend-item">
+                    <span class="legend-dot completed"></span>
+                    Completed
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-dot in-progress"></span>
+                    In Progress
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-dot pending"></span>
+                    Pending
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+  <script>
+    // Initialize dashboard on load
+    document.addEventListener('DOMContentLoaded', function() {
+      renderDashboard();
+      updateSyncTime();
+    });
+  </script>
+</body>
+</html>

@@ -1,19 +1,29 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
+import os
 
 from database import get_db, Base, engine
-import models
 from models import Task
 from schemas import TaskCreate
 
+# --------------------
+# APP SETUP
+# --------------------
 app = FastAPI()
 
-# 🔥 THIS CREATES TABLES
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
+
+# --------------------
+# DATABASE
+# --------------------
 Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-def root():
-    return {"status": "GoDaily backend running 🚀"}
+# --------------------
+# ROUTES (API FIRST)
+# --------------------
 
 @app.post("/tasks")
 def add_task(task: TaskCreate, db: Session = Depends(get_db)):
@@ -23,9 +33,11 @@ def add_task(task: TaskCreate, db: Session = Depends(get_db)):
     db.refresh(new_task)
     return new_task
 
+
 @app.get("/tasks")
 def get_tasks(db: Session = Depends(get_db)):
     return db.query(Task).all()
+
 
 @app.delete("/tasks/{task_id}")
 def delete_task(task_id: int, db: Session = Depends(get_db)):
@@ -35,3 +47,31 @@ def delete_task(task_id: int, db: Session = Depends(get_db)):
     db.delete(task)
     db.commit()
     return {"message": "Task deleted"}
+
+
+# --------------------
+# FRONTEND ROUTES
+# --------------------
+
+@app.get("/")
+def serve_index():
+    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+
+
+@app.get("/{page_name}")
+def serve_pages(page_name: str):
+    file_path = os.path.join(FRONTEND_DIR, page_name)
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    raise HTTPException(status_code=404, detail="Page not found")
+
+
+# --------------------
+# STATIC FILES (LAST!)
+# --------------------
+# This MUST be at the bottom
+app.mount(
+    "/",
+    StaticFiles(directory=FRONTEND_DIR, html=True),
+    name="frontend",
+)

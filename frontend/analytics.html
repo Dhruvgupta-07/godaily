@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoDaily - Analytics</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h1>GoDaily</h1>
+      </div>
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tasks.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              <span>Tasks</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="calendar.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>Calendar</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="analytics.html" class="nav-link active">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              <span>Analytics</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-bottom">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="settings.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span>Settings</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="logout()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="search-bar">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" placeholder="Search task...">
+        </div>
+        <div class="user-info">
+          <span class="user-name">John Doe</span>
+          <div class="user-avatar">JD</div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <h1 class="page-title">Analytics</h1>
+
+        <!-- Analytics Cards -->
+        <div class="analytics-cards">
+          <div class="analytics-card">
+            <p class="analytics-card-value" id="analytics-total">0</p>
+            <p class="analytics-card-label">Total Tasks Created</p>
+          </div>
+          <div class="analytics-card">
+            <p class="analytics-card-value" id="analytics-completion">0%</p>
+            <p class="analytics-card-label">Completion Rate</p>
+          </div>
+          <div class="analytics-card">
+            <p class="analytics-card-value" id="analytics-score">85</p>
+            <p class="analytics-card-label">Productivity Score</p>
+          </div>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="chart-container">
+          <h2 class="chart-title">Weekly Task Completion</h2>
+          <div class="bar-chart" id="bar-chart">
+            <div class="bar-item">
+              <div class="bar" style="height: 60px;"></div>
+              <span class="bar-label">Mon</span>
+            </div>
+            <div class="bar-item">
+              <div class="bar" style="height: 100px;"></div>
+              <span class="bar-label">Tue</span>
+            </div>
+            <div class="bar-item">
+              <div class="bar" style="height: 80px;"></div>
+              <span class="bar-label">Wed</span>
+            </div>
+            <div class="bar-item">
+              <div class="bar" style="height: 120px;"></div>
+              <span class="bar-label">Thu</span>
+            </div>
+            <div class="bar-item">
+              <div class="bar" style="height: 90px;"></div>
+              <span class="bar-label">Fri</span>
+            </div>
+            <div class="bar-item">
+              <div class="bar" style="height: 40px;"></div>
+              <span class="bar-label">Sat</span>
+            </div>
+            <div class="bar-item">
+              <div class="bar" style="height: 30px;"></div>
+              <span class="bar-label">Sun</span>
+            </div>
+          </div>
+          <p style="text-align: center; color: var(--gray-400); font-size: 0.875rem; margin-top: 16px;">
+            Analytics updates based on task completion
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+  <script>
+    // Initialize analytics page
+    document.addEventListener('DOMContentLoaded', function() {
+      renderAnalytics();
+    });
+
+    // Logout function
+    function logout() {
+      // Implement logout logic here
+      alert('Logging out...');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

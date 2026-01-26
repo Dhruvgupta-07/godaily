@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 import os
 
@@ -13,29 +13,30 @@ app = FastAPI()
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
-# ---------- STATIC FILES ----------
-app.mount("/frontend", StaticFiles(directory=FRONTEND_DIR), name="frontend")
-
-# ---------- DATABASE ----------
+# Create tables
 Base.metadata.create_all(bind=engine)
 
-# ---------- HEALTH CHECK (FOR RAILWAY) ----------
-@app.get("/health")
-def health():
-    return {"status": "ok"}
+# Serve static files (css, js)
+app.mount(
+    "/static",
+    StaticFiles(directory=FRONTEND_DIR),
+    name="static",
+)
 
-# ---------- ROOT (FAST RESPONSE) ----------
-@app.get("/", response_class=HTMLResponse)
-def root():
-    return """
-    <html>
-      <head>
-        <meta http-equiv="refresh" content="0; url=/frontend/index.html">
-      </head>
-    </html>
-    """
+@app.get("/")
+def serve_index():
+    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
 
-# ---------- API ----------
+@app.get("/{page_name}")
+def serve_pages(page_name: str):
+    file_path = os.path.join(FRONTEND_DIR, page_name)
+
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+
+    raise HTTPException(status_code=404, detail="Page not found")
+
+# API routes
 @app.post("/tasks")
 def add_task(task: TaskCreate, db: Session = Depends(get_db)):
     new_task = Task(title=task.title)

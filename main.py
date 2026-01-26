@@ -11,26 +11,30 @@ from schemas import TaskCreate
 app = FastAPI()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
-# -------------------------------
-# Database
-# -------------------------------
+# Create DB tables
 Base.metadata.create_all(bind=engine)
 
-# -------------------------------
 # Serve frontend
-# -------------------------------
 app.mount(
-    "/",
-    StaticFiles(directory=FRONTEND_DIR, html=True),
-    name="frontend",
+    "/static",
+    StaticFiles(directory=os.path.join(BASE_DIR, "frontend")),
+    name="static",
 )
 
-# -------------------------------
-# API routes (keep them explicit)
-# -------------------------------
-@app.post("/api/tasks")
+@app.get("/")
+def serve_index():
+    return FileResponse(os.path.join(BASE_DIR, "frontend", "index.html"))
+
+@app.get("/{page}")
+def serve_pages(page: str):
+    file_path = os.path.join(BASE_DIR, "frontend", page)
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    raise HTTPException(status_code=404, detail="Page not found")
+
+# API routes
+@app.post("/tasks")
 def add_task(task: TaskCreate, db: Session = Depends(get_db)):
     new_task = Task(title=task.title)
     db.add(new_task)
@@ -38,11 +42,11 @@ def add_task(task: TaskCreate, db: Session = Depends(get_db)):
     db.refresh(new_task)
     return new_task
 
-@app.get("/api/tasks")
+@app.get("/tasks")
 def get_tasks(db: Session = Depends(get_db)):
     return db.query(Task).all()
 
-@app.delete("/api/tasks/{task_id}")
+@app.delete("/tasks/{task_id}")
 def delete_task(task_id: int, db: Session = Depends(get_db)):
     task = db.query(Task).filter(Task.id == task_id).first()
     if not task:

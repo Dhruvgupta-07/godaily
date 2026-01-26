@@ -8,23 +8,52 @@ from database import get_db, Base, engine
 from models import Task
 from schemas import TaskCreate
 
-# --------------------
-# APP SETUP
-# --------------------
+# -------------------------------------------------
+# App setup
+# -------------------------------------------------
 app = FastAPI()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
-# --------------------
-# DATABASE
-# --------------------
+# -------------------------------------------------
+# Static files (IMPORTANT for Railway)
+# -------------------------------------------------
+app.mount(
+    "/css",
+    StaticFiles(directory=os.path.join(BASE_DIR, "frontend", "css")),
+    name="css",
+)
+
+app.mount(
+    "/js",
+    StaticFiles(directory=os.path.join(BASE_DIR, "frontend", "js")),
+    name="js",
+)
+
+# -------------------------------------------------
+# Create DB tables
+# -------------------------------------------------
 Base.metadata.create_all(bind=engine)
 
-# --------------------
-# ROUTES (API FIRST)
-# --------------------
+# -------------------------------------------------
+# Serve frontend pages
+# -------------------------------------------------
+@app.get("/")
+def serve_index():
+    return FileResponse(
+        os.path.join(BASE_DIR, "frontend", "index.html")
+    )
 
+@app.get("/{page_name}")
+def serve_pages(page_name: str):
+    file_path = os.path.join(BASE_DIR, "frontend", page_name)
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    raise HTTPException(status_code=404, detail="Page not found")
+
+# -------------------------------------------------
+# Tasks API (CRUD)
+# -------------------------------------------------
 @app.post("/tasks")
 def add_task(task: TaskCreate, db: Session = Depends(get_db)):
     new_task = Task(title=task.title)
@@ -33,11 +62,9 @@ def add_task(task: TaskCreate, db: Session = Depends(get_db)):
     db.refresh(new_task)
     return new_task
 
-
 @app.get("/tasks")
 def get_tasks(db: Session = Depends(get_db)):
     return db.query(Task).all()
-
 
 @app.delete("/tasks/{task_id}")
 def delete_task(task_id: int, db: Session = Depends(get_db)):
@@ -46,32 +73,4 @@ def delete_task(task_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Task not found")
     db.delete(task)
     db.commit()
-    return {"message": "Task deleted"}
-
-
-# --------------------
-# FRONTEND ROUTES
-# --------------------
-
-@app.get("/")
-def serve_index():
-    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
-
-
-@app.get("/{page_name}")
-def serve_pages(page_name: str):
-    file_path = os.path.join(FRONTEND_DIR, page_name)
-    if os.path.exists(file_path):
-        return FileResponse(file_path)
-    raise HTTPException(status_code=404, detail="Page not found")
-
-
-# --------------------
-# STATIC FILES (LAST!)
-# --------------------
-# This MUST be at the bottom
-app.mount(
-    "/",
-    StaticFiles(directory=FRONTEND_DIR, html=True),
-    name="frontend",
-)
+    return {"message": "Task deleted successfully"}
